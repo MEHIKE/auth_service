@@ -1,0 +1,24 @@
+node('dind-node') {
+  withMaven(maven:'M3') {
+    stage('Checkout') {
+      git url: 'https://github.com/MEHIKE/auth_service.git', credentialsId: 'mehike', branch: 'master'
+    }
+    stage('Build') {
+      dir('auth-service') {
+        sh 'mvn clean install'
+        def pom = readMavenPom file:'pom.xml'
+        print pom.version
+        env.version = pom.version
+        currentBuild.description = "Release: ${env.version}"
+      }
+    }
+    stage('Image') {
+      dir ('auth-service') {
+        docker.withRegistry('https://192.168.99.100:5000') {
+          def app = docker.build "mehike/auth-service:${env.version}"
+          app.push()
+        }
+      }
+    }
+  }
+}
