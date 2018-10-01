@@ -40,6 +40,26 @@ spec:
             secretKeyRef:
               name: postgresdb
               key: database-user
+        - name: FB_CLIENTID
+          valueFrom:
+            secretKeyRef:
+              name: auth
+              key: fb-clientid
+        - name: FB_CLIENTSECRET
+          valueFrom:
+            secretKeyRef:
+              name: auth
+              key: fb-clientsecret
+        - name: GITHUB_CLIENTID
+          valueFrom:
+            secretKeyRef:
+              name: auth
+              key: github-clientid
+        - name: GITHUB_CLIENTSECRET
+          valueFrom:
+            secretKeyRef:
+              name: auth
+              key: github-clientsecret
         volumeMounts:
         - name: tz-config
           mountPath: /etc/localtime
