@@ -39,10 +39,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.CompositeFilter;
 
 @EnableDiscoveryClient
-@SpringBootApplication
 @RestController
 @EnableOAuth2Client
 @EnableAuthorizationServer
+@SpringBootApplication
 @Order(200)
 public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 
