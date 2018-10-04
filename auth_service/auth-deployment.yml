@@ -15,8 +15,8 @@ spec:
         app: auth
     spec:
       containers:
-      - name: auth_service
-        image: mehike/auth_service:0.0.1
+      - name: auth-service
+        image: mehike/auth-service:0.0.1
         ports:
         - containerPort: 8085
         env:
