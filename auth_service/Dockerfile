@@ -1,6 +1,6 @@
 FROM openjdk:8-jre-alpine
 #FROM java:8
-ENV APP_FILE auth-service-0.0.1-SNAPSHOT.jar
+ENV APP_FILE auth_service-0.0.1-SNAPSHOT.jar
 ENV APP_HOME /usr/apps
 EXPOSE 8085
 COPY target/$APP_FILE $APP_HOME/
