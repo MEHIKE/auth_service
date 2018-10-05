@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 
 
 @Data
-@Entity
+@Entity(name = "users")
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class User extends BaseIdEntity implements UserDetails {
