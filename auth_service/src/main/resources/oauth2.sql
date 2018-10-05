@@ -52,9 +52,10 @@ CREATE TABLE oauth_refresh_token (
 -- Table structure for table permission
 --
 
+create sequence permission_id_seq;
 DROP TABLE IF EXISTS permission;
 	CREATE TABLE permission (
-	  id serial NOT NULL,
+	  id bigint NOT NULL DEFAULT nextval('permission_id_seq'),
 	  name varchar(60) NOT NULL,
 	  created_on timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	  updated_on timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -62,6 +63,7 @@ DROP TABLE IF EXISTS permission;
 	  PRIMARY KEY (id),
 	  constraint name_UNIQUE UNIQUE(name)
 	);
+--alter table permission alter id set default nextval(permission_id_seq);
 
 INSERT INTO permission VALUES (1,'can_delete_user','1970-01-01 00:00:00','1970-01-01 00:00:00',0),(2,'can_create_user','1970-01-01 00:00:00','1970-01-01 00:00:00',0),(3,'can_update_user','1970-01-01 00:00:00','1970-01-01 00:00:00',0),(4,'can_read_user','1970-01-01 00:00:00','1970-01-01 00:00:00',0);
 
@@ -70,8 +72,9 @@ INSERT INTO permission VALUES (1,'can_delete_user','1970-01-01 00:00:00','1970-0
 --
 
 DROP TABLE IF EXISTS role;
+create sequence role_id_seq;
 CREATE TABLE role (
-  id serial NOT NULL,
+  id bigint NOT NULL DEFAULT nextval('role_id_seq'),
   name varchar(60) NOT NULL,
   created_on timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_on timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -114,15 +117,16 @@ INSERT INTO permission_role VALUES (1,1,'1970-01-01 00:00:00','1970-01-01 00:00:
 --
 
 DROP TABLE IF EXISTS users;
+create sequence users_id_seq;
 CREATE TABLE users (
-  id serial NOT NULL,
+  id bigint NOT NULL DEFAULT nextval('users_id_seq'),
   username varchar(24) NOT NULL,
   password varchar(200) NOT NULL,
   email varchar(255) NOT NULL,
-  enabled bit(1) NOT NULL,
-  account_expired bit(1) NOT NULL,
-  credentials_expired bit(1) NOT NULL,
-  account_locked bit(1) NOT NULL,
+  enabled boolean NOT NULL,
+  account_expired boolean NOT NULL,
+  credentials_expired boolean NOT NULL,
+  account_locked boolean NOT NULL,
   created_on timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_on timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   version bigint check(version>=0) NOT NULL DEFAULT '0',
@@ -132,7 +136,7 @@ CREATE TABLE users (
 );
 
 
-INSERT INTO users VALUES (1,'admin','{bcrypt}$2a$10$EOs8VROb14e7ZnydvXECA.4LoIhPOoFHKvVF/iBZ/ker17Eocz4Vi','admin@example.com',b'1','0','0','0','1970-01-01 00:00:00','1970-01-01 00:00:00',0),(2,'user','{bcrypt}$2a$10$EOs8VROb14e7ZnydvXECA.4LoIhPOoFHKvVF/iBZ/ker17Eocz4Vi','user@example.com',b'1','0','0','0','1970-01-01 00:00:00','1970-01-01 00:00:00',0);
+INSERT INTO users VALUES (1,'admin','{bcrypt}$2a$10$EOs8VROb14e7ZnydvXECA.4LoIhPOoFHKvVF/iBZ/ker17Eocz4Vi','admin@example.com','1','0','0','0','1970-01-01 00:00:00','1970-01-01 00:00:00',0),(2,'user','{bcrypt}$2a$10$EOs8VROb14e7ZnydvXECA.4LoIhPOoFHKvVF/iBZ/ker17Eocz4Vi','user@example.com','1','0','0','0','1970-01-01 00:00:00','1970-01-01 00:00:00',0);
 
 
 --
