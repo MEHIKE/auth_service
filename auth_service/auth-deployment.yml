@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: auth-service
-        image: mehike/auth_service:0.0.1
+        image: mehike/auth-service:0.0.1
         #command: [ "sh", "-c"]
         #args:
         #- while true; do
