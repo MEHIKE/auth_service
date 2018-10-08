@@ -17,14 +17,14 @@ spec:
       containers:
       - name: auth-service
         image: mehike/auth_service:0.0.1
-        command: [ "sh", "-c"]
-        args:
-        - while true; do
-            echo -en '\n';
-            printenv FB_APPID FB_SECRET GOOGLE_APPID;
-            printenv GOOGLE_SECRET POSTGRES_DB POSTGRES_HOST POSTGRES_PORT;
-            sleep 5;
-          done;
+        #command: [ "sh", "-c"]
+        #args:
+        #- while true; do
+        #    echo -en '\n';
+        #    printenv FB_APPID FB_SECRET GOOGLE_APPID;
+        #    printenv GOOGLE_SECRET POSTGRES_DB POSTGRES_HOST POSTGRES_PORT;
+        #    sleep 5;
+        #  done;
         ports:
         - containerPort: 8085
         env:
