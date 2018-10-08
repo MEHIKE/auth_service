@@ -7,6 +7,6 @@ spring:
   cloud:
     config:
       enabled: true
-      #uri: http://config:8088
-      uri: http://${CONFIG_SERVICE_HOST}:${CONFIG_SERVICE_PORT}
+      uri: http://config:8088
+      #uri: http://${CONFIG_SERVICE_HOST}:${CONFIG_SERVICE_PORT}
       
