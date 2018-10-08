@@ -40,6 +40,46 @@ spec:
             secretKeyRef:
               name: postgresdb
               key: database-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgresdb
+              key: database-password
+        - name: POSTGRES_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: postgresdb
+              key: database-host
+        - name: POSTGRES_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: postgresdb
+              key: database-port
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: auth
+              key: database-name
+        - name: FB_APPID
+          valueFrom:
+            secretKeyRef:
+              name: auth
+              key: fb-clientid
+        - name: FB_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: auth
+              key: fb-clientsecret
+        - name: GOOGLE_APPID
+          valueFrom:
+            secretKeyRef:
+              name: auth
+              key: google-id
+        - name: GOOGLE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: auth
+              key: google-secret
         volumeMounts:
         - name: tz-config
           mountPath: /etc/localtime
@@ -47,4 +87,3 @@ spec:
         - name: tz-config
           hostPath:
             path: /usr/share/zoneinfo/Europe/Tallinn
-

@@ -6,5 +6,5 @@ metadata:
     app: auth
 data:
   service-port: "8085"
-
+  database-name: oauth2
 
