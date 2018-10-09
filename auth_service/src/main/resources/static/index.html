@@ -15,6 +15,9 @@
 	</head>
 <body>
     <h1>Login</h1>
+    <div class="container text-danger error" style="display:none">
+       There was an error (bad credentials).
+    </div>
     <div class="container unauthenticated">
         <div>
             With Facebook: <a href="/login/facebook">click here</a>
@@ -57,6 +60,22 @@
             })
             return true;
           }
+          $.ajax({
+        	  url : "/user",
+        	  success : function(data) {
+        	    $(".unauthenticated").hide();
+        	    $("#user").html(data.userAuthentication.details.name);
+        	    $(".authenticated").show();
+        	  },
+        	  error : function(data) {
+        	    $("#user").html('');
+        	    $(".unauthenticated").show();
+        	    $(".authenticated").hide();
+        	    if (location.href.indexOf("error=true")>=0) {
+        	      $(".error").show();
+        	    }
+        	  }
+        	});
         </script>
 </body>
 </html>
