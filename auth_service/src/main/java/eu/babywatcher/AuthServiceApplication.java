@@ -146,7 +146,7 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 	    @SuppressWarnings("unchecked")
 	    List<Map<String, Object>> orgs = template.getForObject(url, List.class);
 	    if (orgs.stream()
-	        .anyMatch(org -> "spring-projects".equals(org.get("login")))) {
+	        .anyMatch(org -> "eu.babywatcher".equals(org.get("login")))) {
 	      return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
 	    }
 	    throw new BadCredentialsException("Not in Spring Projects origanization");
