@@ -24,6 +24,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -55,6 +56,7 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.DiscoveryClient;
 
 @EnableDiscoveryClient
+@EnableEurekaClient
 @RestController
 @EnableOAuth2Client
 @EnableAuthorizationServer
