@@ -78,19 +78,15 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// @formatter:off
-		http.antMatcher("/**")
-			.authorizeRequests()
-			.antMatchers("/", "/login**", "/webjars/**", "/error**","/uaa/login**","/uaa/error**","/uaa**")
-			.permitAll()
-			.anyRequest().authenticated()
-			.and().exceptionHandling()
+		http.antMatcher("/**").authorizeRequests().antMatchers("/", "/login**", "/webjars/**").permitAll().anyRequest()
+				.authenticated().and().exceptionHandling()
 				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and().logout()
 				.logoutSuccessUrl("/").permitAll().and().csrf()
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
 				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
 		// @formatter:on
-	} 
-	
+	}
+
 	@Configuration
 	@EnableResourceServer
 	protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
@@ -100,11 +96,12 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 			http.antMatcher("/me").authorizeRequests().anyRequest().authenticated();
 			// @formatter:on
 		}
-	} 
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(AuthServiceApplication.class, args);
 	}
-	
+
 	@Bean
 	public FilterRegistrationBean<OAuth2ClientContextFilter> oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
 		FilterRegistrationBean<OAuth2ClientContextFilter> registration = new FilterRegistrationBean<OAuth2ClientContextFilter>();
@@ -118,59 +115,7 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 	public ClientResources github() {
 		return new ClientResources();
 	}
-	/*@Bean
-	@ConfigurationProperties("github.client")
-	public AuthorizationCodeResourceDetails github() {
-		return new AuthorizationCodeResourceDetails();
-	}*/
 
-//	@RequestMapping("/unauthenticated")
-//	public String unauthenticated() {
-//	  return "redirect:/?error=true";
-//	}
-
-	/*@Configuration
-	public class ServletCustomizer {
-	  @Bean
-	  public EmbeddedServletContainerCustomizer customizer() {
-	    return container -> {
-	      container.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/unauthenticated"));
-	    };
-	  }
-	}*/
-	
-	@Bean
-    public ConfigurableServletWebServerFactory webServerFactory() {
-        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
-        factory.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/unauthenticated"));
-        return factory;
-    }
-
-	@Bean
-	public AuthoritiesExtractor authoritiesExtractor(OAuth2RestOperations template) {
-	  return map -> {
-	    String url = (String) map.get("organizations_url");
-	    @SuppressWarnings("unchecked")
-	    List<Map<String, Object>> orgs = template.getForObject(url, List.class);
-	    if (orgs.stream()
-	        .anyMatch(org -> "eu.babywatcher".equals(org.get("login")))) {
-	      return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
-	    }
-	    throw new BadCredentialsException("Not in Spring Projects origanization");
-	  };
-	}
-	
-	@Bean
-	public OAuth2RestTemplate oauth2RestTemplate(OAuth2ProtectedResourceDetails resource, OAuth2ClientContext context) {
-		return new OAuth2RestTemplate(resource, context);
-	}
-	
-/*	@Bean
-	@ConfigurationProperties("github.resource")
-	public ResourceServerProperties githubResource() {
-		return new ResourceServerProperties();
-	}*/
-	
 	@Bean
 	@ConfigurationProperties("facebook")
 	public ClientResources facebook() {
@@ -192,27 +137,7 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 		filter.setFilters(filters);
 		return filter;
 	}
-	/*private Filter ssoFilter() {
-		  OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/facebook");
-		  OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(), oauth2ClientContext);
-		  facebookFilter.setRestTemplate(facebookTemplate);
-		  UserInfoTokenServices tokenServices = new UserInfoTokenServices(facebookResource().getUserInfoUri(), facebook().getClientId());
-		  tokenServices.setRestTemplate(facebookTemplate);
-		  facebookFilter.setTokenServices(tokenServices);
-		  return facebookFilter;
-	}*/
-	
-	/*@Bean
-	@ConfigurationProperties("facebook.client")
-	public AuthorizationCodeResourceDetails facebook() {
-	  return new AuthorizationCodeResourceDetails();
-	}
-	@Bean
-	@ConfigurationProperties("facebook.resource")
-	public ResourceServerProperties facebookResource() {
-	  return new ResourceServerProperties();
-	}*/
-	
+
 	private Filter ssoFilter(ClientResources client, String path) {
 		OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(
 				path);
@@ -241,9 +166,8 @@ class ClientResources {
 
 	public ResourceServerProperties getResource() {
 		return resource;
-	} 
-	
-}
+	}
+}  
 
 /*@RestController
 class ServiceInstanceRestController {
