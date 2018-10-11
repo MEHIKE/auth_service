@@ -55,12 +55,12 @@ import org.springframework.web.filter.CompositeFilter;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.DiscoveryClient;
 
+@SpringBootApplication
 @EnableDiscoveryClient
 //@EnableEurekaClient
 @RestController
 @EnableOAuth2Client
 @EnableAuthorizationServer
-@SpringBootApplication
 @Order(200)
 //@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
@@ -124,10 +124,10 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 		return new AuthorizationCodeResourceDetails();
 	}*/
 
-	@RequestMapping("/unauthenticated")
-	public String unauthenticated() {
-	  return "redirect:/?error=true";
-	}
+//	@RequestMapping("/unauthenticated")
+//	public String unauthenticated() {
+//	  return "redirect:/?error=true";
+//	}
 
 	/*@Configuration
 	public class ServletCustomizer {
@@ -177,11 +177,18 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 		return new ClientResources();
 	}
 
+	@Bean
+	@ConfigurationProperties("google")
+	public ClientResources google() {
+		return new ClientResources();
+	}
+
 	private Filter ssoFilter() {
 		CompositeFilter filter = new CompositeFilter();
 		List<Filter> filters = new ArrayList<>();
 		filters.add(ssoFilter(facebook(), "/login/facebook"));
 		filters.add(ssoFilter(github(), "/login/github"));
+		filters.add(ssoFilter(google(), "/login/google"));
 		filter.setFilters(filters);
 		return filter;
 	}
