@@ -22,6 +22,7 @@ import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFa
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
+import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,9 +46,13 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.CompositeFilter;
+
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.DiscoveryClient;
 
 @EnableDiscoveryClient
 @RestController
@@ -229,4 +234,20 @@ class ClientResources {
 		return resource;
 	} 
 	
+}
+
+@RestController
+class ServiceInstanceRestController {
+
+	@Autowired
+    private DiscoveryClient  discoveryClient;
+	
+	@RequestMapping("/service-instances/{applicationName}")
+    public List<InstanceInfo> serviceInstancesByApplicationName(
+
+    	@PathVariable String applicationName) {
+		return this.discoveryClient.getInstancesById(applicationName);
+
+	}
+
 }

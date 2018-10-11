@@ -60,6 +60,16 @@ spec:
             secretKeyRef:
               name: auth
               key: github-clientsecret
+        - name: GOOGLE_CLIENTID
+          valueFrom:
+            secretKeyRef:
+              name: auth
+              key: google-id
+        - name: GOOGLE_CLIENTSECRET
+          valueFrom:
+            secretKeyRef:
+              name: auth
+              key: google-secret
         volumeMounts:
         - name: tz-config
           mountPath: /etc/localtime
