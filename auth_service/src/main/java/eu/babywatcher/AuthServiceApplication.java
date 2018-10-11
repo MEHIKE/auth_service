@@ -56,7 +56,7 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.DiscoveryClient;
 
 @EnableDiscoveryClient
-@EnableEurekaClient
+//@EnableEurekaClient
 @RestController
 @EnableOAuth2Client
 @EnableAuthorizationServer
@@ -238,7 +238,7 @@ class ClientResources {
 	
 }
 
-@RestController
+/*@RestController
 class ServiceInstanceRestController {
 
 	@Autowired
@@ -252,4 +252,4 @@ class ServiceInstanceRestController {
 
 	}
 
-}
+}*/
