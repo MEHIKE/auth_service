@@ -64,8 +64,8 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 		// @formatter:off
 		http.antMatcher("/**").authorizeRequests().antMatchers("/", "/uaa", "/uaa/login**", "/login**", "/webjars/**").permitAll().anyRequest()
 				.authenticated().and().exceptionHandling()
-				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and().logout()
-				.logoutSuccessUrl("/").permitAll().and().csrf()
+				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/uaa/")).and().logout()
+				.logoutSuccessUrl("/uaa/").permitAll().and().csrf()
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
 				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
 		// @formatter:on
