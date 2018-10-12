@@ -124,10 +124,12 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 	private Filter ssoFilter() {
 		CompositeFilter filter = new CompositeFilter();
 		List<Filter> filters = new ArrayList<>();
-		filters.add(ssoFilter(facebook(), "/login/facebook"));
-		filters.add(ssoFilter(github(), "/login/github"));
-		filters.add(ssoFilter(google(), "/login/google"));
-		filters.add(ssoFilter(linkedin(), "/login/linkedin"));
+		filters.add(ssoFilter(facebook(), "/uaa/login/facebook"));
+		filters.add(ssoFilter(github(), "/uaa/login/github"));
+		filters.add(ssoFilter(google(), "/uaa/login/google"));
+		filters.add(ssoFilter(linkedin(), "/uaa/login/linkedin"));
+		LOGGER.debug("clientid: *"+linkedin().getClient().getClientId()+"*");
+		LOGGER.debug("***********************************************************************************************");
 		filter.setFilters(filters);
 		return filter;
 	}
