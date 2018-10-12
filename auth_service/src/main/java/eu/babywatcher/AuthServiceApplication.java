@@ -40,9 +40,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.CompositeFilter;
 
-import eu.babywatcher.services.test.MyTestApplication;
-
-
 @SpringBootApplication
 @EnableDiscoveryClient
 //@EnableEurekaClient
