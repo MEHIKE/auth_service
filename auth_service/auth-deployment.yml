@@ -60,6 +60,16 @@ spec:
             secretKeyRef:
               name: auth
               key: github-clientsecret
+        - name: LINKEDIN_CLIENTID
+          valueFrom:
+            secretKeyRef:
+              name: auth
+              key: linkedin-clientid
+        - name: LINKEDIN_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: auth
+              key: linkedin-clientsecret
         - name: GOOGLE_CLIENTID
           valueFrom:
             secretKeyRef:
