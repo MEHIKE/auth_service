@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.servlet.Filter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,6 +40,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.CompositeFilter;
 
+import eu.babywatcher.services.test.MyTestApplication;
+
 
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -49,6 +53,8 @@ import org.springframework.web.filter.CompositeFilter;
 //@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuthServiceApplication.class);
+	
 	@Autowired
 	OAuth2ClientContext oauth2ClientContext;
 
@@ -132,6 +138,10 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 	private Filter ssoFilter(ClientResources client, String path) {
 		OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(
 				path);
+		LOGGER.info("************************************************");
+		LOGGER.info("client_id: *"+client.getClient().getClientId()+"* client_secret: *"
+		+client.getClient().getClientSecret()+"* accesstoken_uri: *"+client.getClient().getAccessTokenUri()
+		+"* token_name: *"+client.getClient().getTokenName()+"* userinfo_uri: *"+client.getResource().getUserInfoUri());
 		OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
 		filter.setRestTemplate(template);
 		UserInfoTokenServices tokenServices = new UserInfoTokenServices(
