@@ -135,10 +135,11 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 	private Filter ssoFilter(ClientResources client, String path) {
 		OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(
 				path);
-		LOGGER.info("************************************************");
-		LOGGER.info("client_id: *"+client.getClient().getClientId()+"* client_secret: *"
+		LOGGER.debug("************************************************");
+		LOGGER.debug("client_id: *"+client.getClient().getClientId()+"* client_secret: *"
 		+client.getClient().getClientSecret()+"* accesstoken_uri: *"+client.getClient().getAccessTokenUri()
 		+"* token_name: *"+client.getClient().getTokenName()+"* userinfo_uri: *"+client.getResource().getUserInfoUri());
+		LOGGER.debug("*******************************************************************************************************************");
 		OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
 		filter.setRestTemplate(template);
 		UserInfoTokenServices tokenServices = new UserInfoTokenServices(
