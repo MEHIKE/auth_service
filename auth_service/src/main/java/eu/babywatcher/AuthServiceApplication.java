@@ -140,12 +140,12 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 		LOGGER.debug("******************************************************************");
 		LOGGER.debug("client_id: *"+client.getClient().getClientId().trim()+"* client_secret: *"
 		+client.getClient().getClientSecret().trim()+"* accesstoken_uri: *"+client.getClient().getAccessTokenUri().trim()
-		+"* token_name: *"+client.getClient().getTokenName().trim()+"* userinfo_uri: *"+client.getResource().getUserInfoUri().trim()+"*");
+		+"* token_name: *"+client.getClient().getTokenName()+"* userinfo_uri: *"+client.getResource().getUserInfoUri().trim()+"*");
 		LOGGER.debug("*******************************************************************************************************************");
 		OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
 		filter.setRestTemplate(template);
 		UserInfoTokenServices tokenServices = new UserInfoTokenServices(
-				client.getResource().getUserInfoUri(), client.getClient().getClientId());
+				client.getResource().getUserInfoUri().trim(), client.getClient().getClientId().trim());
 		tokenServices.setRestTemplate(template);
 		filter.setTokenServices(tokenServices);
 		return filter;
