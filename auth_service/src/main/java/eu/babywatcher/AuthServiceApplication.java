@@ -138,9 +138,9 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 		OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(
 				path);
 		LOGGER.debug("******************************************************************");
-		LOGGER.debug("client_id: *"+client.getClient().getClientId().trim()+"* client_secret: *"
-		+client.getClient().getClientSecret().trim()+"* accesstoken_uri: *"+client.getClient().getAccessTokenUri().trim()
-		+"* token_name: *"+client.getClient().getTokenName()+"* userinfo_uri: *"+client.getResource().getUserInfoUri().trim()+"*");
+		LOGGER.debug("client_id: *"+client.getClient().getClientId()+"* client_secret: *"
+		+client.getClient().getClientSecret()+"* accesstoken_uri: *"+client.getClient().getAccessTokenUri()
+		+"* token_name: *"+client.getClient().getTokenName()+"* userinfo_uri: *"+client.getResource().getUserInfoUri()+"*");
 		LOGGER.debug("*******************************************************************************************************************");
 		OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
 		filter.setRestTemplate(template);
