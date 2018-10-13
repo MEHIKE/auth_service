@@ -2,6 +2,7 @@ FROM openjdk:8-jre-alpine
 #FROM java:8
 ENV APP_FILE auth_service-0.0.1-SNAPSHOT.jar
 ENV APP_HOME /usr/apps
+VOLUME ["/tmp", "/tmp/config", "/tmp/logs"]
 EXPOSE 8085
 COPY target/$APP_FILE $APP_HOME/
 WORKDIR $APP_HOME
