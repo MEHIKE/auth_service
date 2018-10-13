@@ -128,7 +128,7 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 		filters.add(ssoFilter(github(), "/login/github"));
 		filters.add(ssoFilter(google(), "/login/google"));
 		filters.add(ssoFilter(linkedin(), "/login/linkedin"));
-		LOGGER.debug("clientid: *"+linkedin().getClient().getClientId()+"*");
+		LOGGER.debug("ssoFilter() clientid: *"+linkedin().getClient().getClientId().trim()+"*");
 		LOGGER.debug("***********************************************************************************************");
 		filter.setFilters(filters);
 		return filter;
@@ -137,10 +137,10 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 	private Filter ssoFilter(ClientResources client, String path) {
 		OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(
 				path);
-		LOGGER.debug("************************************************");
-		LOGGER.debug("client_id: *"+client.getClient().getClientId()+"* client_secret: *"
-		+client.getClient().getClientSecret()+"* accesstoken_uri: *"+client.getClient().getAccessTokenUri()
-		+"* token_name: *"+client.getClient().getTokenName()+"* userinfo_uri: *"+client.getResource().getUserInfoUri());
+		LOGGER.debug("******************************************************************");
+		LOGGER.debug("client_id: *"+client.getClient().getClientId()+"*=*"+client.getResource().getClientId()+"* client_secret: *"
+		+client.getClient().getClientSecret()+"*=*"+client.getResource().getClientSecret()+"* accesstoken_uri: *"+client.getClient().getAccessTokenUri()
+		+"* token_name: *"+client.getClient().getTokenName()+"* userinfo_uri: *"+client.getResource().getUserInfoUri()+"*");
 		LOGGER.debug("*******************************************************************************************************************");
 		OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
 		filter.setRestTemplate(template);
