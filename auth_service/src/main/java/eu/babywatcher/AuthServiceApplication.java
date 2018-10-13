@@ -145,7 +145,7 @@ public class AuthServiceApplication extends WebSecurityConfigurerAdapter {
 		OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
 		filter.setRestTemplate(template);
 		UserInfoTokenServices tokenServices = new UserInfoTokenServices(
-				client.getResource().getUserInfoUri().trim(), client.getClient().getClientId().trim());
+				client.getResource().getUserInfoUri(), client.getClient().getClientId().trim());
 		tokenServices.setRestTemplate(template);
 		filter.setTokenServices(tokenServices);
 		return filter;
