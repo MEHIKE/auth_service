@@ -74,12 +74,12 @@ spec:
           valueFrom:
             secretKeyRef:
               name: auth
-              key: google-id
+              key: google-clientid
         - name: GOOGLE_CLIENTSECRET
           valueFrom:
             secretKeyRef:
               name: auth
-              key: google-secret
+              key: google-clientsecret
         volumeMounts:
         - name: tz-config
           mountPath: /etc/localtime
