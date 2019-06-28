@@ -4,9 +4,35 @@ server:
 spring:
   application:
     name: auth_service
+  profiles:
+    active: dev
+  #profiles:
+    #include: live, test
+  #cloud:
+  #  config:
+  #    enabled: true
+      #uri: http://config:8088
+  #    uri: http://${CONFIG_SERVICE_HOST}:${CONFIG_SERVICE_PORT}
+---
+server:
+  port: 8005
+
+spring:
+  application:
+    name: auth_service
+  profiles: dev
   cloud:
     config:
-      enabled: true
-      #uri: http://config:8088
-      uri: http://${CONFIG_SERVICE_HOST}:${CONFIG_SERVICE_PORT}
-      
+      enabled: false
+
+logging:
+  level:
+    ROOT: ERROR
+    eu.babywatcher: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    file: /home/rynno/auth.log
+  pattern:
+    #console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
